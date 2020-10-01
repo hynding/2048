@@ -1,0 +1,30 @@
+{
+  "name": "2048",
+  "version": "1.0.0",
+  "description": "A bare-bones 2048 game with hooks to integrate custom display and control devices",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server . -o",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hynding/2048.git"
+  },
+  "keywords": [
+    "game",
+    "2048"
+  ],
+  "author": "Steve Hynding",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hynding/2048/issues"
+  },
+  "homepage": "https://github.com/hynding/2048#readme",
+  "devDependencies": {
+    "cucumber": "^5.0.2",
+    "http-server": "^0.11.1",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  }
+}
