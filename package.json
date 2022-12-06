@@ -24,7 +24,7 @@
   "homepage": "https://github.com/hynding/2048#readme",
   "devDependencies": {
     "cucumber": "^5.0.2",
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }
