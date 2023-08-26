@@ -3,12 +3,10 @@ import { DisplayDriver } from './DisplayDriver.js';
 export class BrowserDisplayDriver extends DisplayDriver {
   constructor() {
     super();
-    this.table = document.querySelector('table');
-  }
-
-  clear() {
-    while(this.table.firstChild) {
-      this.table.removeChild(this.table.firstChild);
+    this.container = document.querySelector('main > table');
+    if (!this.container) {
+      this.container = document.createElement('table');
+      document.querySelector('main').appendChild(this.container);
     }
   }
 
@@ -23,7 +21,7 @@ export class BrowserDisplayDriver extends DisplayDriver {
         dataEl.appendChild(textEl);
         rowEl.appendChild(dataEl);
       });
-      this.table.appendChild(rowEl);
+      this.container.appendChild(rowEl);
     });
   }
 }
