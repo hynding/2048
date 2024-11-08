@@ -6,13 +6,21 @@
     <script type="module" src="index.js" defer></script>
   </head>
   <body>
-    <header>2048</header>
+    <header>
+      <h1>2048</h1>
+      <div id="game-over"></div>
+    </header>
     <main>
+      <label>Rows</label>
+      <input id="cols" type="number" min="4" max="16" value="4">
+      <label>Columns</label>
+      <input id="rows" type="number" min="4" max="16" value="4">
+      <button id="new_game">New Game</button>
       <table></table>
     </main>
     <footer>
-      <label>High Score</label>
-      <summary></summary>
+      <label>Score</label>
+      <summary id="score"></summary>
     </footer>
   </body>
 </html>

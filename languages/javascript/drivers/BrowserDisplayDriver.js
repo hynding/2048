@@ -4,9 +4,35 @@ export class BrowserDisplayDriver extends DisplayDriver {
   constructor() {
     super();
     this.container = document.querySelector('main > table');
+    this.scoreContainer = document.querySelector('#score');
+    this.gameOverContainer = document.querySelector('#game-over');
     if (!this.container) {
       this.container = document.createElement('table');
       document.querySelector('main').appendChild(this.container);
+    }
+  }
+
+  reset() {
+    this.clear();
+    if (this.gameOverContainer) {
+      this.gameOverContainer.textContent = '';
+    }
+    if (this.scoreContainer) {
+      this.scoreContainer.textContent = score;
+    }
+  }
+
+  clear() {
+    if (this.container) {
+      while(this.container.firstChild) {
+        this.container.removeChild(this.container.firstChild);
+      }
+    }
+  }
+
+  updateScore(score) {
+    if (this.scoreContainer) {
+      this.scoreContainer.textContent = score;
     }
   }
 
@@ -23,5 +49,11 @@ export class BrowserDisplayDriver extends DisplayDriver {
       });
       this.container.appendChild(rowEl);
     });
+  }
+
+  showGameOver(isWinner) {
+    if (this.gameOverContainer) {
+      this.gameOverContainer.textContent = isWinner ? 'You win!' : 'You lose!';
+    }
   }
 }

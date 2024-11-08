@@ -1,13 +1,12 @@
 export class DisplayDriver {
   constructor() {
     this.container = null
+    this.scoreContainer = null
+    this.gameOverContainer = null
   }
-  clear() {
-    if (this.container) {
-      while(this.container.firstChild) {
-        this.container.removeChild(this.container.firstChild);
-      }
-    }
-  }
+  reset() {}
+  clear() {}
+  updateScore(score) {}
   draw(grid) {}
+  showGameOver(isWinner) {}
 }

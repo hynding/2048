@@ -30,14 +30,35 @@ export class TwentyFortyEight {
 
     this.grid = grid || this.initializeGrid();
 
-    this.draw();
+    this.score = 0;
+    this.highestTile = 2;
+
     this.start();
   }
 
+  combine(list, addToScore) {
+    return combineList(value => {
+      const newValue = value * 2;
+      if (addToScore) {
+        if (newValue > this.highestTile) {
+          this.highestTile = newValue;
+        }
+        this.score += value / 2;
+      }
+      return newValue;
+    })(list);
+  }
+
   start() {
+    this.displayDriver.reset();
     this.controlDriver.register({
       move: (direction) => this.move(direction)
     });
+    this.draw();
+  }
+
+  stop() {
+    this.controlDriver.unregister();
   }
 
   initializeGrid() {
@@ -50,14 +71,15 @@ export class TwentyFortyEight {
 
   gameOver() {
     console.log('Game Over');
-    // disable controls
-    // update display
+    this.stop();
+    this.displayDriver.showGameOver(this.highestTile === 2048);
   }
 
   generateRandomCell() {
     const cell = this.getRandomCell();
     if (!cell) {
-      gameOver();
+      this.gameOver();
+      return;
     }
     this.grid[cell.row][cell.col] = 2;
   }
@@ -66,18 +88,44 @@ export class TwentyFortyEight {
     const { isVertical, isReversed } = GRID_LINE_META_MAP[direction];
     const movesLength = isVertical ? this.cols : this.rows;
 
+    const currentGridHash = JSON.stringify(this.grid);
+    const currentGrid = JSON.parse(currentGridHash);
+
     for(let i = 0; i < movesLength; i++) {
       const list = fetchValues(this.grid, i, isVertical, isReversed);
-      const result = stretch(combine(reduceList(list)), list.length);
-      replaceValues(result, this.grid, i, isVertical, isReversed);
+      const result = stretch(this.combine(reduceList(list), true), list.length);
+      replaceValues(result, currentGrid, i, isVertical, isReversed);
     }
 
-    this.generateRandomCell();
-    this.draw();
+    if (currentGridHash !== JSON.stringify(currentGrid)) {
+      this.grid = currentGrid;
+      this.generateRandomCell();
+      this.draw();
+      if (!this.canMove() || this.highestTile === 2048) {
+        this.gameOver();
+      }
+    }
+  }
+
+  canMove() {
+    for(let row = 0; row < this.rows; row++) {
+      const comboRow = combine(reduceList(fetchValues(this.grid, row)));
+      if (comboRow.length < this.rows) {
+        return true;
+      }
+    }
+    for(let col = 0; col < this.cols; col++) {
+      const comboCol = combine(reduceList(fetchValues(this.grid, col, true)));
+      if (comboCol.length < this.cols) {
+        return true;
+      }
+    }
+    return false;
   }
 
   draw() {
     this.displayDriver.draw(this.grid);
+    this.displayDriver.updateScore(this.score);
   }
 
   getRandomCell() {
