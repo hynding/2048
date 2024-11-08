@@ -1,14 +1,21 @@
 # 2048
-A scalable, vanilla JS, native ES6 application of 2048
 
-# Objective
-Create a 2048 game with a minimalistic, dependency-free approach that is behavior-driven and scalable for cross-platform support.
+A library of simple, dependency-free 2048 games coded in various programming languages (currently just JavaScript and C). 
 
-# Requirements
-* A web browser that supports JavaScript modules
-* Node.js and NPM (for dev dependencies and running features)
+## Requirements (per language)
+* C - Unix-like OS with a `make` utility installed
+* JavaScript - ES2020 supported web browser
 
-# Special Features
-* 2048 is traditionally played on a 4x4 grid but the dimensions can be change with the `rows` and `cols` options.
-* User controlled events and display rendering are individually encapsulated components supplied to the game.
-* A keyboard control and browser display driver have been implemented for the minimal viable product (MVP).
+## Running the games
+
+The games for each language is purposefully placed in their own directory within `languages` so be sure to navigate to the desired source code accordingly before getting started.
+
+### C 
+
+Run `make cli-2048 && ./cli-2048` on the command line
+
+### JavaScript
+
+In VSCode, I recommend using the "Live Preview" extension developed by Microsoft and starting it with the `index.html` file selected.
+
+Alternatively, you could use any web server software pointing to the `javascript` directory. One simple option for users with Node.js and NPM installed on the system is to install the package `http-server` globally (`npm install -g http-server`) then run `http-server . -o`. This will open your default web browser and load the `index.html` file automatically.
